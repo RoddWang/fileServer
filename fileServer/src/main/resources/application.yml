@@ -1,0 +1,37 @@
+info:
+  version: 1.0
+  desc: fileDemo
+server:
+  port: 9080
+spring:
+  application:
+    name: fileDemo
+    index: 1
+management:
+  context-path: /manage
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.index:${random.value}}
+    prefer-ip-address: true
+    hostname: fileDemo-${spring.application.index}
+    status-page-url-path: ${management.context-path}/info
+    health-check-url-path: ${management.context-path}/health
+    metadata-map:
+      management:
+        context-path: ${management.context-path}
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9000/eureka
+custom:
+  customTokenExpressTime: 10 #单位天
+  fileDownloadPropsList:
+  - activeTime: #物联卡激活时间
+      fileDir: D:\activeTimeByDateFile\
+      filePrefix: ActiveTime_
+  - cardStatus: #物联卡状态查询
+      fileDir: \cardStatusByDateFile\
+      filePrefix: CardStatus_
+  - cardNo: #集团下物联卡卡号查询
+      fileDir: \cardNoByDateFile\
+      filePrefix: CardNo_
+debug: false
